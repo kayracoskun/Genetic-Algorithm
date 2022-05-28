@@ -1,2 +1,8 @@
+# IDE - VSCode
 .vscode/
 **.pyc
+
+# img
+ *.jpg
+ *.png 
+*.drawio
