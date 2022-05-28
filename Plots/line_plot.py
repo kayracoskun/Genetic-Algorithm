@@ -59,3 +59,59 @@ plt.grid(linestyle="--")
 plt.legend(["Test 1", "Test 2", "Test 3"], loc="lower right")
 
 plt.show()
+
+
+# Chromosome length line plots
+# Time plots
+plt.figure(figsize=(9.6, 7.2), dpi=120)
+plt.subplot(2, 1, 1)
+plt.plot(data.chr_x, data.y_chrtime1, data.chr_x,
+         data.y_chrtime2, data.chr_x, data.y_chrtime3, marker="o")
+
+plt.title("Chromosome Length Graph")
+#plt.xlabel("Population Size")
+plt.ylabel("Computation Time (second)")
+
+plt.grid(linestyle="--")
+plt.legend(["Test 1", "Test 2", "Test 3"], loc="lower right")
+
+# Length Plot
+plt.subplot(2, 1, 2)
+plt.plot(data.chr_x, data.y_chrlen1, data.chr_x,
+         data.y_chrlen2, data.chr_x, data.y_chrlen3, marker="o")
+
+plt.xlabel("Chromosome Length")
+plt.ylabel("Path Length (meter)")
+
+plt.grid(linestyle="--")
+plt.legend(["Test 1", "Test 2", "Test 3"], loc="lower right")
+
+plt.show()
+
+
+# Stop criteria line plots
+# Time plots
+plt.figure(figsize=(9.6, 7.2), dpi=120)
+plt.subplot(2, 1, 1)
+plt.plot(data.st_x, data.y_sttime1, data.st_x,
+         data.y_sttime2, data.st_x, data.y_sttime3, marker="o")
+
+plt.title("Stop Criteria Graph")
+#plt.xlabel("Population Size")
+plt.ylabel("Computation Time (second)")
+
+plt.grid(linestyle="--")
+plt.legend(["Test 1", "Test 2", "Test 3"], loc="lower right")
+
+# Length Plot
+plt.subplot(2, 1, 2)
+plt.plot(data.st_x, data.y_stlen1, data.st_x,
+         data.y_stlen2, data.st_x, data.y_stlen3, marker="o")
+
+plt.xlabel("Stop Criteria")
+plt.ylabel("Path Length (meter)")
+
+plt.grid(linestyle="--")
+plt.legend(["Test 1", "Test 2", "Test 3"], loc="lower right")
+
+plt.show()
