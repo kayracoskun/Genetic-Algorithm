@@ -6,9 +6,9 @@ import data
 # Time plot
 plt.figure(figsize=(9.6, 7.2), dpi=120)
 plt.subplot(2, 1, 1)
-plt.scatter(data.pop_x, data.y_time1)
-plt.scatter(data.pop_x, data.y_time2)
-plt.scatter(data.pop_x, data.y_time3)
+plt.scatter(data.pop_x, data.y_poptime1)
+plt.scatter(data.pop_x, data.y_poptime2)
+plt.scatter(data.pop_x, data.y_poptime3)
 
 plt.title("Population Size Graph")
 #plt.xlabel("Population Size")
@@ -21,9 +21,9 @@ plt.yticks(np.arange(0, 0.12, 0.01))
 
 # Length Plot
 plt.subplot(2, 1, 2)
-plt.scatter(data.pop_x, data.y_length1)
-plt.scatter(data.pop_x, data.y_length2)
-plt.scatter(data.pop_x, data.y_length3)
+plt.scatter(data.pop_x, data.y_poplen1)
+plt.scatter(data.pop_x, data.y_poplen2)
+plt.scatter(data.pop_x, data.y_poplen3)
 
 plt.xlabel("Population Size")
 plt.ylabel("Path Length (meter)")
