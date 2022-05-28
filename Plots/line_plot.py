@@ -2,8 +2,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import data
 
-# Population size plots
-
+# Population size line plots
 # Time Plot
 plt.figure(figsize=(9.6, 7.2), dpi=120)
 plt.subplot(2, 1, 1)
@@ -30,5 +29,33 @@ plt.ylabel("Path Length (meter)")
 plt.grid(linestyle="--")
 plt.legend(["Test 1", "Test 2", "Test 3"], loc="lower right")
 plt.xticks(np.arange(0, 200, 10))
+
+plt.show()
+
+
+# Mutation rate line plots
+# Time plots
+plt.figure(figsize=(9.6, 7.2), dpi=120)
+plt.subplot(2, 1, 1)
+plt.plot(data.mut_x, data.y_muttime1, data.mut_x,
+         data.y_muttime2, data.mut_x, data.y_muttime3, marker="o")
+
+plt.title("Mutation Rate Graph")
+#plt.xlabel("Population Size")
+plt.ylabel("Computation Time (second)")
+
+plt.grid(linestyle="--")
+plt.legend(["Test 1", "Test 2", "Test 3"], loc="upper right")
+
+# Length Plot
+plt.subplot(2, 1, 2)
+plt.plot(data.mut_x, data.y_mutlen1, data.mut_x,
+         data.y_mutlen2, data.mut_x, data.y_mutlen3, marker="o")
+
+plt.xlabel("Mutation Rate")
+plt.ylabel("Path Length (meter)")
+
+plt.grid(linestyle="--")
+plt.legend(["Test 1", "Test 2", "Test 3"], loc="lower right")
 
 plt.show()
