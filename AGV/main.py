@@ -1,16 +1,27 @@
 #!/usr/bin/env python
 
-import numpy as np
-from math import pi, sqrt, atan2
-from tools.population import population
+"""
+Main script
+
+Contains: main function
+
+Author: Yasim Ahmad(yaaximus)
+
+Email: yasim.ahmed63@yahoo.com
+"""
+from tools.population import population, calculate_distance
 from tools.fitness import fitness
 from tools.ranking import ranking
 from tools.dna import dna
+from tools.draw_plot import show_plot
+
 from config import Config
+import matplotlib.pyplot as plt
+
 from timeit import default_timer as timer
 
 
-def main_chromo():
+def main():
     """
     This function encapsulates the cappbilty of initializing chromosome population
     and then continue calculating fitness, generate ranking, perform crossover and
@@ -26,6 +37,8 @@ def main_chromo():
 
     chr_crossover_mutated_population = dna(chr_pop_fitness=chr_pop_fitness,
                                            ranked_population=chr_ranked_population, chr_best_fitness_index=chr_best_fitness_index, last_pop=chr_population)
+
+   # show_plot(best_chromosome=chr_crossover_mutated_population[0])
 
     while not Config.stop_generation:
 
@@ -45,186 +58,36 @@ def main_chromo():
         else:
             Config.stop_criteria = 0
 
-        if Config.stop_criteria >= 3:
+        if Config.stop_criteria >= 5:
             Config.stop_generation = True
+            # plt.close('all')
 
         print("Best chromosome is:",
               chr_crossover_mutated_population[chr_best_fitness_index[0]])
 
+        # show_plot(best_chromosome=chr_crossover_mutated_population[0])
         Config.generations += 1
 
+    #show_plot(best_chromosome=chr_crossover_mutated_population[0], inf_time=True)
     return chr_crossover_mutated_population[chr_best_fitness_index[0]]
 
 
 start = timer()
-best_chromo = main_chromo()
+best_chromo = main()
 end = timer()
-print(end-start)
-print(best_chromo)
-
 best_chromo_coord = []
 
 for p in best_chromo:
     point = int(p)
-    path_point = Config.path_points[point]
-    best_chromo_coord.append(path_point)
+    best_chromo_coord.append(Config.path_points[point])
 
-WAYPOINTS = best_chromo_coord[1:]
-print(WAYPOINTS)
+path = 0
+for p in range(len(best_chromo_coord)-1):
+    path = path + \
+        calculate_distance(best_chromo_coord[p], best_chromo_coord[p+1])
 
-
-class PID:
-    def __init__(self, P=0.0, I=0.0, D=0.0, Derivator=0, Integrator=0, Integrator_max=10, Integrator_min=-10):
-        self.Kp = P
-        self.Ki = I
-        self.Kd = D
-        self.Derivator = Derivator
-        self.Integrator = Integrator
-        self.Integrator_max = Integrator_max
-        self.Integrator_min = Integrator_min
-        self.set_point = 0.0
-        self.error = 0.0
-
-    def update(self, current_value):
-        self.error = self.set_point - current_value
-        if self.error > pi:  # specific design for circular situation
-            self.error = self.error - 2*pi
-        elif self.error < -pi:
-            self.error = self.error + 2*pi
-        self.P_value = self.Kp * self.error
-        self.D_value = self.Kd * (self.error - self.Derivator)
-        self.Derivator = self.error
-        self.Integrator = self.Integrator + self.error
-        if self.Integrator > self.Integrator_max:
-            self.Integrator = self.Integrator_max
-        elif self.Integrator < self.Integrator_min:
-            self.Integrator = self.Integrator_min
-        self.I_value = self.Integrator * self.Ki
-        PID = self.P_value + self.I_value + self.D_value
-        return PID
-
-    def setPoint(self, set_point):
-        self.set_point = set_point
-        self.Derivator = 0
-        self.Integrator = 0
-
-    def setPID(self, set_P=0.0, set_I=0.0, set_D=0.0):
-        self.Kp = set_P
-        self.Ki = set_I
-        self.Kd = set_D
-
-
-class turtlebot_move():
-    def __init__(self):
-        rospy.init_node('turtlebot_move', anonymous=False)
-        rospy.loginfo("Press CTRL + C to terminate")
-        rospy.on_shutdown(self.stop)
-
-        self.x = 0.0
-        self.y = 0.0
-        self.theta = 0.0
-        self.pid_theta = PID(0, 0, 0)  # initialization
-
-        self.odom_sub = rospy.Subscriber("odom", Odometry, self.odom_callback)
-        self.vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-        self.vel = Twist()
-        self.rate = rospy.Rate(10)
-        self.counter = 0
-        self.trajectory = list()
-
-        # track a sequence of waypoints
-        for point in WAYPOINTS:
-            self.move_to_point(point[0], point[1])
-            rospy.sleep(1)
-        self.stop()
-        rospy.logwarn("Action done.")
-
-        # plot trajectory
-        data = np.array(self.trajectory)
-        np.savetxt('trajectory.csv', data, fmt='%f', delimiter=',')
-        plt.plot(data[:, 0], data[:, 1])
-        plt.show()
-
-    def move_to_point(self, x, y):
-        # Compute orientation for angular vel and direction vector for linear vel
-        diff_x = x - self.x
-        diff_y = y - self.y
-        direction_vector = np.array([diff_x, diff_y])
-        direction_vector = direction_vector / \
-            sqrt(diff_x*diff_x + diff_y*diff_y)  # normalization
-        theta = atan2(diff_y, diff_x)
-
-        # We should adopt different parameters for different kinds of movement
-        self.pid_theta.setPID(1, 0, 0)     # P control while steering
-        self.pid_theta.setPoint(theta)
-        rospy.logwarn("### PID: set target theta = " + str(theta) + " ###")
-
-        # Adjust orientation first
-        while not rospy.is_shutdown():
-            angular = self.pid_theta.update(self.theta)
-            if abs(angular) > 0.2:
-                angular = angular/abs(angular)*0.2
-            if abs(angular) < 0.01:
-                break
-            self.vel.linear.x = 0
-            self.vel.angular.z = angular
-            self.vel_pub.publish(self.vel)
-            self.rate.sleep()
-
-        # Have a rest
-        self.stop()
-        self.pid_theta.setPoint(theta)
-        # self.pid_theta.setPID(1, 0, 0)   # PI control while moving
-        self.pid_theta.setPID(1, 0.02, 0.2)  # PID control while moving
-
-        # Move to the target point
-        while not rospy.is_shutdown():
-            diff_x = x - self.x
-            diff_y = y - self.y
-            vector = np.array([diff_x, diff_y])
-            linear = np.dot(vector, direction_vector)  # projection
-            if abs(linear) > 0.2:
-                linear = linear/abs(linear)*0.2
-
-            angular = self.pid_theta.update(self.theta)
-            if abs(angular) > 0.2:
-                angular = angular/abs(angular)*0.2
-
-            if abs(linear) < 0.01 and abs(angular) < 0.01:
-                break
-            self.vel.linear.x = linear
-            self.vel.angular.z = angular
-            self.vel_pub.publish(self.vel)
-            self.rate.sleep()
-
-        self.stop()
-
-    def stop(self):
-        self.vel.linear.x = 0
-        self.vel.angular.z = 0
-        self.vel_pub.publish(self.vel)
-        rospy.sleep(1)
-
-    def odom_callback(self, msg):
-        # Get (x, y, theta) specification from odometry topic
-        quarternion = [msg.pose.pose.orientation.x, msg.pose.pose.orientation.y,
-                       msg.pose.pose.orientation.z, msg.pose.pose.orientation.w]
-        (roll, pitch, yaw) = tf.transformations.euler_from_quaternion(quarternion)
-        self.theta = yaw
-        self.x = msg.pose.pose.position.x
-        self.y = msg.pose.pose.position.y
-
-        # Make messages saved and prompted in 5Hz rather than 100Hz
-        self.counter += 1
-        if self.counter == 20:
-            self.counter = 0
-            self.trajectory.append([self.x, self.y])
-            rospy.loginfo("odom: x=" + str(self.x) + ";  y=" +
-                          str(self.y) + ";  theta=" + str(self.theta))
-
-
-if __name__ == '__main__':
-    try:
-        turtlebot_move()
-    except rospy.ROSInterruptException:
-        rospy.loginfo("Action terminated.")
+print("-"*150)
+print("Final: ", best_chromo)
+print("Coord: ", best_chromo_coord)
+print("\nLength: ", path)
+print("Time: ", end-start)
