@@ -30,7 +30,7 @@ plt.subplot(2, 1, 1)
 plt.plot(x, yt1, x, yt2, x, yt3, marker="o")
 
 plt.title("Population Size Graph")
-plt.xlabel("Population Size")
+#plt.xlabel("Population Size")
 plt.ylabel("Computation Time (second)")
 
 plt.grid(linestyle="--")
