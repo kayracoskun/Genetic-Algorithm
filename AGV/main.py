@@ -58,12 +58,12 @@ def main():
         else:
             Config.stop_criteria = 0
 
-        if Config.stop_criteria >= 5:
+        if Config.stop_criteria >= 3:
             Config.stop_generation = True
             # plt.close('all')
 
-        print("Best chromosome is:",
-              chr_crossover_mutated_population[chr_best_fitness_index[0]])
+        # print("Best chromosome is:",
+            # chr_crossover_mutated_population[chr_best_fitness_index[0]])
 
         # show_plot(best_chromosome=chr_crossover_mutated_population[0])
         Config.generations += 1

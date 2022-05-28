@@ -5,13 +5,13 @@ path_points = [[0.5, 1], [1, 1], [1.5, 1], [2, 1], [0.5, 2], [1, 2], [1.5, 2], [
     3.5, 5], [4, 5], [4.5, 5], [0.5, 6], [1, 6], [1.5, 6], [2, 6], [2.5, 6], [3, 6], [3.5, 6], [4, 6], [4.5, 6], [0.5, 7], [2.5, 7], [4.5, 7], [0.5, 8], [4.5, 8], [2.5, 8]]
 
 npts = len(path_points)
-pop_max = 1000
-mutation_rate = 0.005
+pop_max = 100
+mutation_rate = 0.05
 start_index = int(0)
 end_index = npts - 1
 generations = 1
 prev_best_fitness = 0
-nobs = 18
+nobs = 8
 nbits = ma.log10(npts) / ma.log10(2)
 chr_len = int(((nobs+2)*nbits)/nbits)
 stop_criteria = 0
