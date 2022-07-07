@@ -89,14 +89,14 @@ plt.legend(["Test 1", "Test 2", "Test 3"], loc="lower right")
 plt.show()
 
 
-# Stop criteria line plots
+# Stop criterion line plots
 # Time plots
 plt.figure(figsize=(9.6, 7.2), dpi=120)
 plt.subplot(2, 1, 1)
 plt.plot(data.st_x, data.y_sttime1, data.st_x,
          data.y_sttime2, data.st_x, data.y_sttime3, marker="o")
 
-plt.title("Stop Criteria Graph")
+plt.title("Stop Criterion Graph")
 #plt.xlabel("Population Size")
 plt.ylabel("Computation Time (second)")
 
@@ -108,7 +108,7 @@ plt.subplot(2, 1, 2)
 plt.plot(data.st_x, data.y_stlen1, data.st_x,
          data.y_stlen2, data.st_x, data.y_stlen3, marker="o")
 
-plt.xlabel("Stop Criteria")
+plt.xlabel("Stop Criterion")
 plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
