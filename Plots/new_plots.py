@@ -1,6 +1,7 @@
-from matplotlib import pyplot as plt
-import numpy as np
 import data
+import numpy as np
+from matplotlib import pyplot as plt
+plt.rcParams["font.family"] = "Times New Roman"
 
 """ POPULATION SIZE """
 pop_time_av = np.zeros(np.shape(data.pop_x))
