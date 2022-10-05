@@ -124,7 +124,7 @@ plt.scatter(data.st_x, data.y_sttime1, marker="*", s=200)
 plt.scatter(data.st_x, data.y_sttime2, marker="^", s=70)
 plt.scatter(data.st_x, data.y_sttime3, marker="o")
 
-plt.title("Stop Criterion - Compution Graph Graph")
+plt.title("Stop Criterion - Compution Time Graph")
 plt.xlabel("Stop Criterion")
 plt.ylabel("Computation Time (second)")
 
