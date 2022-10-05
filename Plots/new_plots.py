@@ -97,9 +97,9 @@ plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
 plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
-plt.ylim([7.845, 7.860])
+plt.ylim([7.852, 7.856])
 plt.xticks(np.arange(9, 16, 1))
-plt.yticks(np.arange(7.845, 7.860, step=0.001))
+plt.yticks(np.arange(7.852, 7.857, step=0.001))
 
 plt.show()
 
@@ -148,8 +148,8 @@ plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
 plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
-plt.ylim([7.845, 7.860])
-plt.yticks(np.arange(7.845, 7.860, step=0.001))
+plt.ylim([7.852, 7.856])
+plt.yticks(np.arange(7.852, 7.857, step=0.001))
 plt.xticks(np.arange(2, 7, 1))
 
 plt.show()
@@ -198,8 +198,8 @@ plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
 plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
-plt.ylim([7.845, 7.860])
-plt.yticks(np.arange(7.845, 7.860, step=0.001))
+plt.ylim([7.852, 7.856])
+plt.yticks(np.arange(7.852, 7.857, step=0.001))
 plt.xticks(np.arange(0, 0.275, 0.025))
 
 plt.show()
