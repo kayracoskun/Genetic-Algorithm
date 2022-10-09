@@ -25,6 +25,18 @@ def poly5_objective(x, a, b, c, d, e, f):
     return (a * x) + (b * x**2) + (c * x**3) + (d * x**4) + (e * x**5) + f
 
 
+def poly6_objective(x, a, b, c, d, e, f, g):
+    return (a * x) + (b * x**2) + (c * x**3) + (d * x**4) + (e * x**5) + (f * x**6) + g
+
+
+def logarithmic(x, a, b, c):
+    return a * np.log(x+b)+c
+
+
+def exponential(x, a, b, c):
+    return a * np.exp(-b*x)+c
+
+
 """ POPULATION SIZE """
 pop_time_av = np.zeros(np.shape(data.pop_x))
 pop_len_av = np.zeros(np.shape(data.pop_x))
@@ -55,7 +67,8 @@ plt.ylabel("Computation Time (second)")
 plt.xlabel("Population Size")
 
 plt.grid(linestyle="--")
-plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
+plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
+           loc="lower right", fontsize=12)
 plt.xticks(np.arange(0, 200, 10))
 plt.yticks(np.arange(0.005, 0.11, 0.005))
 
@@ -63,10 +76,10 @@ plt.show()
 
 # Length Plot
 
-pop_len_func, _ = curve_fit(poly4_objective, data.pop_x, pop_len_av)
-a2, b2, c2, d2, e2 = pop_len_func
+pop_len_func, _ = curve_fit(exponential, data.pop_x, pop_len_av)
+a2, b2, c2 = pop_len_func
 x_line_pl = np.arange(10, 200, 10)
-y_line_pl = poly4_objective(x_line_pl, a2, b2, c2, d2, e2)
+y_line_pl = exponential(x_line_pl, a2, b2, c2)
 
 plt.figure(figsize=(9.6, 7.2), dpi=120)
 plt.plot(x_line_pl, y_line_pl, color="r")
@@ -79,7 +92,8 @@ plt.xlabel("Population Size")
 plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
-plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="upper right")
+plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
+           loc="upper right", fontsize=12)
 plt.xticks(np.arange(0, 200, 10))
 plt.yticks(np.arange(7.8, 8.5, 0.05))
 
@@ -116,7 +130,8 @@ plt.ylabel("Computation Time (second)")
 plt.xlabel("Chromosome Length")
 
 plt.grid(linestyle="--")
-plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
+plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
+           loc="lower right", fontsize=12)
 plt.xticks(np.arange(9, 16, 1))
 plt.yticks(np.arange(0.06, 0.135, 0.005))
 
@@ -134,7 +149,8 @@ plt.xlabel("Chromosome Length")
 plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
-plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
+plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
+           loc="lower right", fontsize=12)
 plt.ylim([7.852, 7.856])
 plt.xticks(np.arange(9, 16, 1))
 plt.yticks(np.arange(7.852, 7.857, step=0.001))
@@ -172,7 +188,8 @@ plt.xlabel("Stop Criterion")
 plt.ylabel("Computation Time (second)")
 
 plt.grid(linestyle="--")
-plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
+plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
+           loc="lower right", fontsize=12)
 plt.xticks(np.arange(2, 7, 1))
 plt.yticks(np.arange(0.03, 0.08, step=0.005))
 
@@ -190,7 +207,8 @@ plt.xlabel("Stop Criterion")
 plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
-plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
+plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
+           loc="lower right", fontsize=12)
 plt.ylim([7.852, 7.856])
 plt.yticks(np.arange(7.852, 7.857, step=0.001))
 plt.xticks(np.arange(2, 7, 1))
@@ -228,7 +246,8 @@ plt.xlabel("Mutation Rate")
 plt.ylabel("Computation Time (second)")
 
 plt.grid(linestyle="--")
-plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="upper right")
+plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
+           loc="upper right", fontsize=12)
 plt.xticks(np.arange(0, 0.275, 0.025))
 
 plt.show()
@@ -245,7 +264,8 @@ plt.xlabel("Mutation Rate")
 plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
-plt.legend(["Average", "Test 1", "Test 2", "Test 3"], loc="lower right")
+plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
+           loc="lower right", fontsize=12)
 plt.ylim([7.852, 7.856])
 plt.yticks(np.arange(7.852, 7.857, step=0.001))
 plt.xticks(np.arange(0, 0.275, 0.025))
