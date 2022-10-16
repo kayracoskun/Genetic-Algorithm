@@ -29,6 +29,14 @@ def poly6_objective(x, a, b, c, d, e, f, g):
     return (a * x) + (b * x**2) + (c * x**3) + (d * x**4) + (e * x**5) + (f * x**6) + g
 
 
+def poly7_objective(x, a, b, c, d, e, f, g, h):
+    return (a * x) + (b * x**2) + (c * x**3) + (d * x**4) + (e * x**5) + (f * x**6) + (g * x**7) + h
+
+
+def poly8_objective(x, a, b, c, d, e, f, g, h, i):
+    return (a * x) + (b * x**2) + (c * x**3) + (d * x**4) + (e * x**5) + (f * x**6) + (g * x**7) + (h * x**8) + i
+
+
 def logarithmic(x, a, b, c):
     return a * np.log(x+b)+c
 
@@ -49,10 +57,10 @@ for i in range(len(pop_len_av)):
     pop_len_av[i] = (data.y_poplen1[i] +
                      data.y_poplen2[i] + data.y_poplen3[i]) / 3
 
-pop_time_func, _ = curve_fit(poly3_objective, data.pop_x, pop_time_av)
-a1, b1, c1, d1 = pop_time_func
-x_line_pt = np.arange(10, 200, 10)
-y_line_pt = poly3_objective(x_line_pt, a1, b1, c1, d1)
+pop_time_func, _ = curve_fit(poly2_objective, data.pop_x, pop_time_av)
+a1, b1, c1 = pop_time_func
+x_line_pt = np.arange(10, 190, 0.001)
+y_line_pt = poly2_objective(x_line_pt, a1, b1, c1)
 
 # Population size plots
 # Time Plot
@@ -68,7 +76,7 @@ plt.xlabel("Population Size")
 
 plt.grid(linestyle="--")
 plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
-           loc="lower right", fontsize=12)
+           loc="lower right", fontsize=15)
 plt.xticks(np.arange(0, 200, 10))
 plt.yticks(np.arange(0.005, 0.11, 0.005))
 
@@ -78,7 +86,7 @@ plt.show()
 
 pop_len_func, _ = curve_fit(exponential, data.pop_x, pop_len_av)
 a2, b2, c2 = pop_len_func
-x_line_pl = np.arange(10, 200, 10)
+x_line_pl = np.arange(10, 190, 0.001)
 y_line_pl = exponential(x_line_pl, a2, b2, c2)
 
 plt.figure(figsize=(9.6, 7.2), dpi=120)
@@ -93,7 +101,7 @@ plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
 plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
-           loc="upper right", fontsize=12)
+           loc="upper right", fontsize=15)
 plt.xticks(np.arange(0, 200, 10))
 plt.yticks(np.arange(7.8, 8.5, 0.05))
 
@@ -112,10 +120,10 @@ for i in range(len(chr_len_av)):
     chr_len_av[i] = (data.y_chrlen1[i] +
                      data.y_chrlen2[i] + data.y_chrlen3[i]) / 3
 
-chr_time_func, _ = curve_fit(poly5_objective, data.chr_x, chr_time_av)
-a3, b3, c3, d3, e3, f3 = chr_time_func
-x_line_ct = np.arange(9, 16, 1)
-y_line_ct = poly5_objective(x_line_ct, a3, b3, c3, d3, e3, f3)
+chr_time_func, _ = curve_fit(poly2_objective, data.chr_x, chr_time_av)
+a3, b3, c3 = chr_time_func
+x_line_ct = np.arange(9, 15, 0.001)
+y_line_ct = poly2_objective(x_line_ct, a3, b3, c3)
 
 # Chromosome length plots
 # Time plots
@@ -131,7 +139,7 @@ plt.xlabel("Chromosome Length")
 
 plt.grid(linestyle="--")
 plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
-           loc="lower right", fontsize=12)
+           loc="lower right", fontsize=15)
 plt.xticks(np.arange(9, 16, 1))
 plt.yticks(np.arange(0.06, 0.135, 0.005))
 
@@ -150,7 +158,7 @@ plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
 plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
-           loc="lower right", fontsize=12)
+           loc="lower right", fontsize=15)
 plt.ylim([7.852, 7.856])
 plt.xticks(np.arange(9, 16, 1))
 plt.yticks(np.arange(7.852, 7.857, step=0.001))
@@ -170,10 +178,10 @@ for i in range(len(st_len_av)):
     st_len_av[i] = (data.y_stlen1[i] +
                     data.y_stlen2[i] + data.y_stlen3[i]) / 3
 
-stop_time_func, _ = curve_fit(poly4_objective, data.st_x, st_time_av)
-a4, b4, c4, d4, e4 = stop_time_func
-x_line_st = np.arange(2, 7, 1)
-y_line_st = poly4_objective(x_line_st, a4, b4, c4, d4, e4)
+stop_time_func, _ = curve_fit(poly2_objective, data.st_x, st_time_av)
+a4, b4, c4 = stop_time_func
+x_line_st = np.arange(2, 6, 0.001)
+y_line_st = poly2_objective(x_line_st, a4, b4, c4)
 
 # Stop criterion line plots
 # Time plots
@@ -189,7 +197,7 @@ plt.ylabel("Computation Time (second)")
 
 plt.grid(linestyle="--")
 plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
-           loc="lower right", fontsize=12)
+           loc="lower right", fontsize=15)
 plt.xticks(np.arange(2, 7, 1))
 plt.yticks(np.arange(0.03, 0.08, step=0.005))
 
@@ -208,7 +216,7 @@ plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
 plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
-           loc="lower right", fontsize=12)
+           loc="lower right", fontsize=15)
 plt.ylim([7.852, 7.856])
 plt.yticks(np.arange(7.852, 7.857, step=0.001))
 plt.xticks(np.arange(2, 7, 1))
@@ -228,10 +236,10 @@ for i in range(len(mut_len_av)):
     mut_len_av[i] = (data.y_mutlen1[i] +
                      data.y_mutlen2[i] + data.y_mutlen3[i]) / 3
 
-mut_time_func, _ = curve_fit(poly5_objective, data.mut_x, mut_time_av)
-a5, b5, c5, d5, e5, f5 = mut_time_func
-x_line_mt = data.mut_x
-y_line_mt = poly5_objective(x_line_mt, a5, b5, c5, d5, e5, f5)
+mut_time_func, _ = curve_fit(poly7_objective, data.mut_x, mut_time_av)
+a5, b5, c5, d5, e5, f5, g5, h5 = mut_time_func
+x_line_mt = np.arange(0.01, 0.25, 0.001)
+y_line_mt = poly7_objective(x_line_mt, a5, b5, c5, d5, e5, f5, g5, h5)
 
 # Mutation rate plots
 # Time Plot
@@ -247,7 +255,7 @@ plt.ylabel("Computation Time (second)")
 
 plt.grid(linestyle="--")
 plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
-           loc="upper right", fontsize=12)
+           loc="upper right", fontsize=15)
 plt.xticks(np.arange(0, 0.275, 0.025))
 
 plt.show()
@@ -265,7 +273,7 @@ plt.ylabel("Path Length (meter)")
 
 plt.grid(linestyle="--")
 plt.legend(["Fitted Curve", "Test 1", "Test 2", "Test 3"],
-           loc="lower right", fontsize=12)
+           loc="lower right", fontsize=15)
 plt.ylim([7.852, 7.856])
 plt.yticks(np.arange(7.852, 7.857, step=0.001))
 plt.xticks(np.arange(0, 0.275, 0.025))
